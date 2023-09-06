@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Http\Request;
 use Illuminate\Support\Http\Response;
 use Illuminate\Support\Facades\Route;
 
@@ -35,15 +36,15 @@ Route::get('/', function () {
     ]);
 })->name('task.index');
 
-Route::view('/tasks/create', 'create')->name('task.create');
+Route::view('/tasks/create', 'create')->name('tasks.create');
 
 Route::get('/tasks/{id}', function ($id)  {
   return view('show', ['task' => \App\Models\Task::findorFail($id)]);
 })->name('tasks.show');
 
-Route::post('/tasks', function(){
-  dd('We have reached the create post');
-})->name('tasks.create');
+Route::post('/tasks', function(Request $request){
+  dd($request->all());
+})->name('tasks.store');
 
 Route::fallback(function(){
     return 'Pages does not exist';
